@@ -1,4 +1,3 @@
-import 'package:go_router/go_router.dart';
 import 'package:flutter/material.dart';
 import 'pages/page1.dart';
 import 'pages/page2.dart';
@@ -9,50 +8,23 @@ void main() {
   runApp(const MyApp());
 }
 
-final GoRouter _router = GoRouter(
-  routes: <RouteBase>[
-    GoRoute(
-      path: '/',
-      builder: (BuildContext context, GoRouterState state) {
-        return const MyHomePage(title: 'Flutter Demo Home Page');
-      },
-      routes: <RouteBase>[
-        GoRoute(
-          path: 'page1',
-          builder: (BuildContext context, GoRouterState state) {
-            return const Page1();
-          },
-        ),
-        GoRoute(
-          path: 'page2',
-          builder: (BuildContext context, GoRouterState state) {
-            return const Page2();
-          },
-        ),
-        GoRoute(
-          path: 'page3',
-          builder: (BuildContext context, GoRouterState state) {
-            return const Page3();
-          },
-        ),
-      ],
-    ),
-  ],
-);
-
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp.router(
+    return MaterialApp(
       title: 'Flutter Demo',
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      routerConfig: _router,
+      routes: {
+        '/': (context) => const MyHomePage(title: 'Flutter Demo Home Page'),
+        '/page3': (context) => const Page3(),
+        '/page4': (context) => const Page4(),
+      },
     );
   }
 }
@@ -66,6 +38,21 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
+  void _navigatePage1() {
+    Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => const Page1()),
+    );
+  }
+
+  void _navigatePage2() {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+          builder: (context) => const Page2(name: "Passing value to Page 2!")),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -79,19 +66,26 @@ class _MyHomePageState extends State<MyHomePage> {
           children: <Widget>[
             TextButton(
                 onPressed: () {
-                  context.go('/page1');
+                  _navigatePage1();
                 },
                 child: const Text('Go to Page 1')),
             TextButton(
                 onPressed: () {
-                  context.go('/page2');
+                  _navigatePage2();
                 },
                 child: const Text('Go to Page 2')),
             TextButton(
                 onPressed: () {
-                  context.go('/page3');
+                  Navigator.pushNamed(context, '/page3',
+                      arguments: 'My Parameter');
                 },
                 child: const Text('Go to Page 3')),
+            TextButton(
+                onPressed: () async {
+                  final result = await Navigator.pushNamed(context, '/page4');
+                  print(result);
+                },
+                child: const Text('Go to Page 4')),
           ],
         ),
       ),

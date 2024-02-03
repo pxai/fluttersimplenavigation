@@ -2,6 +2,10 @@
 
 A new Flutter project.
 
+## For routing with 2.0
+
+flutter pub add go_router
+
 ## Getting Started
 
 This project is a starting point for a Flutter application.

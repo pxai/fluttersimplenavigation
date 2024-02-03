@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
 
-class Page2 extends StatelessWidget {
-  final String? name;
-  const Page2({super.key, this.name});
+class Page3 extends StatelessWidget {
+  const Page3({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final args = ModalRoute.of(context)!.settings.arguments as String;
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-        title: Text("Page 2 $name"),
+        title: Text("Page 3: $args"),
       ),
       body: TextButton(
         onPressed: () {

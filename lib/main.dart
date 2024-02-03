@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'pages/page1.dart';
 import 'pages/page2.dart';
+import 'pages/page3.dart';
+import 'pages/page4.dart';
 
 void main() {
   runApp(const MyApp());
@@ -18,7 +20,11 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home: const MyHomePage(title: 'Flutter Demo Home Page'),
+      routes: {
+        '/': (context) => const MyHomePage(title: 'Flutter Demo Home Page'),
+        '/page3': (context) => const Page3(),
+        '/page4': (context) => const Page4(),
+      },
     );
   }
 }
@@ -42,7 +48,8 @@ class _MyHomePageState extends State<MyHomePage> {
   void _navigatePage2() {
     Navigator.push(
       context,
-      MaterialPageRoute(builder: (context) => const Page2()),
+      MaterialPageRoute(
+          builder: (context) => const Page2(name: "Passing value to Page 2!")),
     );
   }
 
@@ -67,6 +74,18 @@ class _MyHomePageState extends State<MyHomePage> {
                   _navigatePage2();
                 },
                 child: const Text('Go to Page 2')),
+            TextButton(
+                onPressed: () {
+                  Navigator.pushNamed(context, '/page3',
+                      arguments: 'My Parameter');
+                },
+                child: const Text('Go to Page 3')),
+            TextButton(
+                onPressed: () async {
+                  final result = await Navigator.pushNamed(context, '/page4');
+                  print(result);
+                },
+                child: const Text('Go to Page 4')),
           ],
         ),
       ),

@@ -1,21 +1,20 @@
 import 'package:flutter/material.dart';
 
-class Page2 extends StatelessWidget {
-  final String? name;
-  const Page2({super.key, this.name});
+class Page4 extends StatelessWidget {
+  const Page4({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-        title: Text("Page 2 $name"),
+        title: const Text('Page 4'),
       ),
       body: TextButton(
         onPressed: () {
-          Navigator.pop(context);
+          Navigator.pop(context, "Returned VALUE");
         },
-        child: const Text('Go back from 3!'),
+        child: const Text('Go back from 4 with return!'),
       ),
     );
   }
